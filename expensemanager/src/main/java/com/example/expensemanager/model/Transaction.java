@@ -33,7 +33,7 @@ public class Transaction {
     @Column(name = "date")
     private LocalDateTime date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -4,9 +4,11 @@ package com.example.expensemanager.service.concretes;
 import com.example.expensemanager.dto.user.requests.CreateUserRequest;
 import com.example.expensemanager.dto.user.requests.UpdateUserRequest;
 import com.example.expensemanager.dto.user.response.*;
+import com.example.expensemanager.exception.BussinessExcepiton;
 import com.example.expensemanager.mapper.UserMapper;
 import com.example.expensemanager.repository.UserRepository;
 import com.example.expensemanager.service.abstracts.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.el.lang.ELArithmetic;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,13 +25,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public void saverUser(User user) {
 
         userRepository.save(user);
     }
 
     @Override
-
+    @Transactional
     public CreateUserResponse createUser(CreateUserRequest request) {
         User user= UserMapper.INSTANCE.createUserMapper(request);
         User createdUser= userRepository.save(user);
@@ -65,17 +68,18 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-
+    @Transactional
     public void deleteUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()){
             userRepository.deleteById(id);
         }
-        else throw new RuntimeException("User not found : " + id);
+        else throw new BussinessExcepiton("User not found : " + id);
 
     }
 
     @Override
+    @Transactional
     public UpdateUserResponse updateUser(UpdateUserRequest updateUserRequest, Long id) {
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()){
@@ -93,7 +97,7 @@ public class UserServiceImpl implements UserService {
                     updatedUser.getUpdatedAt()
             );
         }
-        else throw new RuntimeException("User not found : " + id);
+        else throw new BussinessExcepiton("User not found : " + id);
     }
 
     @Override
@@ -102,7 +106,7 @@ public class UserServiceImpl implements UserService {
         if(user.isPresent()){
             return user.get();
         }
-        else throw new RuntimeException("User not found : " + username);
+        else throw new BussinessExcepiton("User not found : " + username);
     }
 
 

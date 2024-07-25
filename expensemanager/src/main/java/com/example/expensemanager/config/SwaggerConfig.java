@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "EXPENSE MANAGER API", version = "1.0", description = "Customer Service API Documentation"),
+        info = @Info(title = "EXPENSE MANAGER API", version = "1.0", description = "Expense Manager API Documentation"),
         security = @SecurityRequirement(name = "bearerAuth"),
         servers = @Server(url = "http://localhost:8080")
 )

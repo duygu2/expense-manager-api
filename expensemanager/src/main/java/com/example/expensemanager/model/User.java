@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,7 +40,7 @@ public class User implements UserDetails {
     @Column(name = "role")
     private UserRole role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<Transaction> transaction;
 
     @CreatedDate
